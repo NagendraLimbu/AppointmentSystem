@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Appointment System</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" integrity="sha256-8qbGU+6CyzZndATqt8JYzpha71ptNqBkpagFVI+t6oI=" crossorigin="anonymous" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/css/bootstrap-timepicker.min.css" integrity="sha256-Sv44mRstp+agwCWaPO4R+KKV+Az9Cu+qS5/hNRQlHT0=" crossorigin="anonymous" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"/>
+	<style type="text/css">
+		.search{
+			padding: 10px;
+			width: 50%;
+		}
+		.addForm{
+			background-color: rgba(91, 192, 222, 0.11);
+		}
+	</style>
+</head>
+	<body>
+	<div class="container">
+		<h2 class="text-info"> Appointment System </h2>
+		<div class="row">
+			<div class="col-lg-3"></div>
+			<div class="col-lg-6">
+				<!-- Area to display validation error -->
+				<div class="alert alert-danger" style="display:none;"></div>
+				<div class="alert alert-success" style="display:none;"></div>
+				<!-- Area to display data added successfully -->
+				<div class="alert alert-success alert-dismissable" id="sucess-alert" >
+					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+					<strong>Success!</strong> Data successfully added.
+				</div>
+			</div>
+			<div class="col-lg-3"></div>
+		</div>
+                       
+		<div class="row">
+			<div class="col-md-12">
+				<form  method="post" action="" id="submitForm" > 
+					<button type="button" value="New" id="btnNew" class="btn btn-success">New <i class="fa fa-pencil" aria-hidden="true"></i></button>
+					<button type="submit" value="Add" id="btnAdd" class="btn btn-info">Add <i class="fa fa-plus" aria-hidden="true"></i></button>&nbsp;
+					<button type="button" value="Cancel" id="btnCancel" class="btn btn-danger">Cancel <i class="fa fa-ban" aria-hidden="true"></i></button><br /><br />
+					<div id="appointmentForm" class="addForm">
+						<table class="table table-stripped">
+							<tr>
+								<td><label class="col-md-4 control-label">Appointment Date</label></td>
+								<td><input class="form-control input-md col-md-8 datepicker" data-date-format="mm/dd/yyyy" id="appointmentDate" name="appointmentDate" placeholder="Select Date" required></td>
+							</tr>
+							<tr>
+								<td><label class="col-md-4 control-label">Appointment Time</label></td>
+								<td>
+										<input id="appointmentTime" name="appointmentTime" type="text" class="form-control input-md col-md-8 bootstrap-timepicker timepicker" data-date-format="HH:mm" placeholder="Select Time" required>
+								</td>
+							</tr>
+							<tr>
+								<td><label class="col-md-4 control-label">Description</label></td>
+								<td>
+									<textarea type="text" rows="5" id="appointmentDescription" placeholder="Description" name="appointmentDescription" required class="form-control input-md"></textarea>
+								</td>
+							</tr>
+						</table>
+					</div>
+					
+				</form>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-12">
+				<form>
+					<input type="text" id="appointmentSearch" name="appointmentSearch" required="true" placeholder="Search String" class="search"/>
+					&nbsp;
+					<a type="button" value="Search" id="btnSearch" class="btn btn-success">Search <i class="fa fa-search" aria-hidden="true"></i>
+					</a><br />
+				</form>
+			</div>
+		</div>
+		<hr>
+		
+		<!-- Area to display appointments -->
+		<div class="row">
+			<div class="col-md-12">
+				<div id="displayAppointment">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th class="col-md-1 col-md-offset-3">Appointment Date</th>
+								<th class="col-md-1 col-md-offset-3">Appointment Time </th>
+								<th class="col-md-1 col-md-offset-3">Description</th>
+							</tr>
+						</thead>
+						<tbody id="results"></tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	</body>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js" integrity="sha256-urCxMaTtyuE8UK5XeVYuQbm/MhnXflqZ/B9AOkyTguo=" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/js/bootstrap-timepicker.min.js" integrity="sha256-bmXHkMKAxMZgr2EehOetiN/paT9LXp0KKAKnLpYlHwE=" crossorigin="anonymous"></script>
+	<script src="appointment.js"></script>
+</html>
